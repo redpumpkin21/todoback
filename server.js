@@ -1,15 +1,24 @@
-require('custom-env').env(true)
+require('dotenv').config()
 
 const PORT = process.env.PORT
 
 const express = require('express')
 const morgan = require('morgan')
-const mongoose = require('mongoose')
-const db = mongoose.connection
+const cors = require('cors')
+
+const mongoose = require('./db/connection')
 
 const app = express()
 
 app.use(cors())
 app.use(express.json())
-app.use(moragn('tiny'))
-mongoose.connect('')
+app.use(morgan('tiny'))
+
+
+const todoRouter = require ('./controllers/Todo')
+
+app.get('/', (req, res) => res.send('Server is working'))
+app.use('/todo', todoRouter)
+
+
+app.listen(PORT, () => console.log(`listening on por ${PORT}`))
