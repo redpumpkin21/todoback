@@ -72,6 +72,12 @@ router.get('/', async(req, res) => {
    res.json(await Todo.find({}).catch((err) => res.status(400).json(err)))
 })
 
+router.get('/:id', async(req, res) =>{ 
+    ((await Todo.findById(req.params.id)
+        .then( todo => res.json(todo))
+        .catch(err => res.status(400).json(error))
+    ))})
+
 router.post('/', async(req,res) => {
     try {
         const newTodo = await Todo.create(req.body)
